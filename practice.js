@@ -7,7 +7,7 @@ let right = document.querySelector(".right");
 let food = document.querySelector(".food")
 
 let way = "s";
-let speed = 20;
+let speed = 15;
 let step = 1;
 let area = 290;
 let coordinates= [];
