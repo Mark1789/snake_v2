@@ -9,11 +9,13 @@ let food = document.querySelector(".food")
 let way = "s";
 let speed = 10;
 let step = 1;
+let sizeBoxes = 20;
 let areaMin = 0;
-let areaMax = 290;
+let areaMax = 280;
 let coordinates= [];
 let i = 1;
-let long = 10;
+let longSumDef = 20;
+let long = longSumDef;
 let crutch = true;
 let cornersHeadSnake = [];
 let foodSides = [];
@@ -21,7 +23,7 @@ let bodySides = [];
 let boxs = [];
 let fail = () => `You fail. Score: ${score.innerHTML}`;
 
-//check snake hurt yourself body, if NOT, then take coordinates 
+//check snake hurt yourself body, if NOT, then take coordinates snake-head
 function coord () {
   
   for (let y = 0; y < cornersHeadSnake.length; y += 1) {
@@ -38,15 +40,15 @@ function coord () {
   corners();
 }
 
-//get coordinates 4 corners head snake
+//get coordinates 4 corners head-snake
 function corners() {
   let topSnake = parseInt(snake.style.top);
   let leftSnake = parseInt(snake.style.left);
   cornersHeadSnake = [];
   cornersHeadSnake.push([snake.style.top, snake.style.left]);
-  cornersHeadSnake.push([snake.style.top, leftSnake + 10 + "px"]);
-  cornersHeadSnake.push([topSnake + 10 + "px", leftSnake + 10 + "px"]);
-  cornersHeadSnake.push([topSnake + 10 + "px", snake.style.left]);
+  cornersHeadSnake.push([snake.style.top, leftSnake + sizeBoxes + "px"]);
+  cornersHeadSnake.push([topSnake + sizeBoxes + "px", leftSnake + sizeBoxes + "px"]);
+  cornersHeadSnake.push([topSnake + sizeBoxes + "px", snake.style.left]);
 }
 
 //creat food
@@ -62,20 +64,20 @@ function foodBorder() {
   let topFood = parseInt(food.style.top);
   let leftFood = parseInt(food.style.left);
   foodSides = [];
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < sizeBoxes; i += 1) {
     foodSides.push([food.style.top, leftFood + i + "px"].toString());
     
-    foodSides.push([topFood + 10 + "px", leftFood + (10 - i) + "px"].toString());
+    foodSides.push([topFood + sizeBoxes + "px", leftFood + (sizeBoxes - i) + "px"].toString());
   }
   
-  for (let i = 0; i < 10; i += 1) {
-    foodSides.push([topFood + i + "px", leftFood + 10 + "px"].toString());
+  for (let i = 0; i < sizeBoxes; i += 1) {
+    foodSides.push([topFood + i + "px", leftFood + sizeBoxes + "px"].toString());
   
-    foodSides.push([topFood + (10 - i) + "px", food.style.left].toString());
+    foodSides.push([topFood + (sizeBoxes - i) + "px", food.style.left].toString());
   }
 }
 
-//check eat food, if YES, then creat body-box
+//check to eat food, if YES, then creat body-box
 function check() {
   let checkArrays = false;
   for (let y = 0; y < cornersHeadSnake.length; y += 1) {
@@ -118,34 +120,40 @@ let process = setInterval(() => {
       break;
   }
   
+  //check crash snake with border square 
   if (topSnake < areaMin || topSnake > areaMax || leftSnake < areaMin || leftSnake > areaMax) {
        alert(fail());
        clearInterval(process);
        location.reload();
     } 
   
+  //create body-box
   for (let p = 0; p < boxs.length; p += 1) {
    let box = document.querySelector(`#${boxs[p]}`)
    box.style.top = coordinates[p+long][0];
    box.style.left = coordinates[+long][1];
-   
-   //if (p > 1) 
+   //get sides body-boxes
+   if (p > 1) {
   let top = parseInt(box.style.top);
   let left = parseInt(box.style.left);
-  for (let i = 0; i < 10; i += 2) {
-    bodySides.push([top + 5 + "px", left + i + "px"].toString());
-    bodySides.push([top + (10 - i) + "px", left + 5 + "px"].toString());
-}
-   
-   long += 10;
+  for (let i = 0; i < sizeBoxes; i += 2) {
+    bodySides.push([top + "px", left + i + "px"].toString());
+    bodySides.push([top + i + "px", left + "px"].toString());
+    
+    bodySides.push([top + sizeBoxes + "px", left + i + "px"].toString());
+    bodySides.push([top + i + "px", left + sizeBoxes + "px"].toString());
   }
-  long = 10;
+}
+   long += longSumDef;
+  }
+  long = longSumDef;
   
   check();
   coord();
   bodySides.splice(0)
 }, speed)
 
+//assign way
 function direction (xy) {
   if (way === "u" && xy === "d" && i > 1) return;
   if (way === "d" && xy === "u" && i > 1) return;
