@@ -7,10 +7,10 @@ let right = document.querySelector(".right");
 let food = document.querySelector(".food")
 
 let way = "s";
-let speed = 7;
+let speed = 10;
 let step = 1;
-let areaMin = -100000;
-let areaMax = 29000;
+let areaMin = 290;
+let areaMax = 290;
 let coordinates= [];
 let i = 1;
 let long = 10;
@@ -51,8 +51,8 @@ function corners() {
 
 //creat food
 function randLocFood () {
-  food.style.top = Math.round(Math.random()*(290/step))*step + "px";
-  food.style.left = Math.round(Math.random()*(290/step))*step + "px";
+  food.style.top = Math.round(Math.random()*(areaMax/step))*step + "px";
+  food.style.left = Math.round(Math.random()*(areaMax/step))*step + "px";
   foodBorder()
 }
 randLocFood ();
