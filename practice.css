@@ -15,22 +15,22 @@ body {
   position: relative;
 }
 .snakeHead {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   background: lawngreen;
   position: absolute;
   border: 1px solid lightgreen;
 }
 .snakeBody {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   background: seagreen;
   position: absolute;
   border: 1px solid lightgreen;
 }
 .food {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   background: orange;
   position:absolute;
   border: 1px solid lightcoral;
